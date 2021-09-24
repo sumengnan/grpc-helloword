@@ -1,0 +1,55 @@
+syntax="proto3";
+
+package demo;
+
+//定义一个服务
+service HelloWordService{
+  //简单rpc调用
+  rpc simpleSayHello (HelloRequest) returns(HelloResponse){};
+
+  //客户端流式 RPC
+  rpc clientStreamSayHello (stream HelloRequest) returns(HelloResponse){};
+
+  //服务端流式 RPC
+  rpc serverStreamSayHello (HelloRequest) returns(stream HelloResponse){};
+
+  //双向流式 RPC
+  rpc streamSayHello (stream HelloRequest) returns(stream HelloResponse){};
+
+}
+//定义请求结构体
+message HelloRequest{
+  string message=1;
+  Type type=2;
+  //定义枚举类可以使用
+  enum Type{
+    hello=0;
+    why=1;
+    when=2;
+  }
+}
+
+//定义响应结构体
+message HelloResponse{
+    bool isOk = 1;
+    string message=2;
+    //相当于定义list数据
+    //repeated string messageList=2;
+}
+
+//proto对应Java数据类型如下：
+//    double	double
+//    float	float
+//    int32	int
+//    int64	long
+//    uint32	int
+//    uint64	long
+//    sint32	int
+//    sint64	long
+//    fixed32	int
+//    fixed64	long
+//    sfixed32	int
+//    sfixed64	long
+//    bool	boolean
+//    string	String
+//    bytes	ByteString
